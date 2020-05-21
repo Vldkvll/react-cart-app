@@ -10,7 +10,7 @@ class App extends React.Component {
         products: [],
         filteredProducts: [],
         // size: 0,
-        // sort: []
+        sort: ''
     }
 
     async componentDidMount(prevProps, prevState, snapshot) {
@@ -21,25 +21,26 @@ class App extends React.Component {
         })
     }
 
-    handleChangeSize(e) {
+    handleChangeSort = (e) =>  {
         this.setState({sort: e.target.value})
         this.listProducts()
     }
 
     listProducts() {
         this.setState(state => {
+            console.log(state)
             if (state.sort !== '') {
                 state.products.sort((a, b) => (state.sort === 'Lowest')
-                    ? (a.price < b.price ? 1 : -1)
-                    : (a.price > b.price ? 1 : -1))
+                    ? (a.price > b.price ? 1 : -1)
+                    : (a.price < b.price ? 1 : -1))
             } else {
-                state.products.sort((a, b) => (a.id < b.id ? 1 : -1))
+                state.products.sort((a, b) => (a.id > b.id ? 1 : -1))
             }
             return {filteredProducts: state.products}
         })
     }
 
-    handleChangeSort = {}
+    handleChangeSize= {}
 
     render() {
         const {filteredProducts, size, sort} = this.state
