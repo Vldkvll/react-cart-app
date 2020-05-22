@@ -26,6 +26,11 @@ class App extends React.Component {
         this.listProducts()
     }
 
+    handleChangeSize = (e) =>  {
+        this.setState({size: e.target.value})
+        this.listProducts()
+    }
+
     listProducts() {
         this.setState(state => {
             console.log(state)
@@ -36,11 +41,13 @@ class App extends React.Component {
             } else {
                 state.products.sort((a, b) => (a.id > b.id ? 1 : -1))
             }
+            if(state.size !== ''){
+                return {filteredProducts: state.products.filter( a =>
+                        a.availableSizes.indexOf(state.size.toUpperCase()) >= 0)}
+            }
             return {filteredProducts: state.products}
         })
     }
-
-    handleChangeSize= {}
 
     render() {
         const {filteredProducts, size, sort} = this.state

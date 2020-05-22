@@ -21,7 +21,22 @@ const Filter = ({size, sort, handleChangeSize, handleChangeSort, count}) => {
                 </label>
             </div>
             <div className="col-md-4">
-
+                <label htmlFor="">
+                    Filter size
+                    <select name="" id=""
+                            className="form-control"
+                            value={size}
+                            onChange={handleChangeSize}
+                    >
+                        <option value="">All</option>
+                        <option value="x">XS</option>
+                        <option value="s">S</option>
+                        <option value="m">M</option>
+                        <option value="l">L</option>
+                        <option value="xl">XL</option>
+                        <option value="xxl">XXL</option>
+                    </select>
+                </label>
             </div>
         </div>
     )
