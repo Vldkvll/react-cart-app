@@ -30,16 +30,27 @@ class App extends React.Component {
         this.setState({size: e.target.value})
         this.listProducts()
     }
-
+// indian code
+    // listProducts() {
+    //     this.setState(state => {
+    //         console.log(state)
+    //         if (state.sort !== '') {
+    //             state.products.sort((a, b) => (state.sort === 'Lowest')
+    //                 ? (a.price > b.price ? 1 : -1)
+    //                 : (a.price < b.price ? 1 : -1))
+    //         } else {
+    //             state.products.sort((a, b) => (a.id > b.id ? 1 : -1))
+    //         }
+// common person code
     listProducts() {
         this.setState(state => {
             console.log(state)
             if (state.sort !== '') {
                 state.products.sort((a, b) => (state.sort === 'Lowest')
-                    ? (a.price > b.price ? 1 : -1)
-                    : (a.price < b.price ? 1 : -1))
+                    ? a.price - b.price
+                    : b.price - a.price)
             } else {
-                state.products.sort((a, b) => (a.id > b.id ? 1 : -1))
+                state.products.sort((a, b) => a.id - b.id)
             }
             if(state.size !== ''){
                 return {filteredProducts: state.products.filter( a =>
