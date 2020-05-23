@@ -2,6 +2,7 @@ import React from 'react';
 import {getProductsJson} from "./API/api";
 import Products from "./components/Products";
 import Filter from "./components/Filter";
+import Basket from "./components/basket";
 
 import style from './App.module.css';
 
@@ -9,8 +10,9 @@ class App extends React.Component {
     state = {
         products: [],
         filteredProducts: [],
-        // size: 0,
-        sort: ''
+        size: '',
+        sort: '',
+        cartItems: []
     }
 
     async componentDidMount(prevProps, prevState, snapshot) {
@@ -19,32 +21,24 @@ class App extends React.Component {
             products: responseData.data,
             filteredProducts: responseData.data
         })
+
+        if(localStorage.getItem('cartItems')){
+            this.setState({cartItems: JSON.parse(localStorage.getItem('cartItems'))})
+        }
     }
 
-    handleChangeSort = (e) =>  {
+    handleChangeSort = (e) => {
         this.setState({sort: e.target.value})
         this.listProducts()
     }
 
-    handleChangeSize = (e) =>  {
+    handleChangeSize = (e) => {
         this.setState({size: e.target.value})
         this.listProducts()
     }
-// indian code
-    // listProducts() {
-    //     this.setState(state => {
-    //         console.log(state)
-    //         if (state.sort !== '') {
-    //             state.products.sort((a, b) => (state.sort === 'Lowest')
-    //                 ? (a.price > b.price ? 1 : -1)
-    //                 : (a.price < b.price ? 1 : -1))
-    //         } else {
-    //             state.products.sort((a, b) => (a.id > b.id ? 1 : -1))
-    //         }
-// common person code
+
     listProducts() {
         this.setState(state => {
-            console.log(state)
             if (state.sort !== '') {
                 state.products.sort((a, b) => (state.sort === 'Lowest')
                     ? a.price - b.price
@@ -52,16 +46,40 @@ class App extends React.Component {
             } else {
                 state.products.sort((a, b) => a.id - b.id)
             }
-            if(state.size !== ''){
-                return {filteredProducts: state.products.filter( a =>
-                        a.availableSizes.indexOf(state.size.toUpperCase()) >= 0)}
+            if (state.size !== '') {
+                return {
+                    filteredProducts: state.products.filter(a =>
+                        a.availableSizes.indexOf(state.size.toUpperCase()) >= 0)
+                }
             }
             return {filteredProducts: state.products}
         })
     }
 
+    handleAddToCart = (e, product) => {
+        console.log('product '+product.id)
+        this.setState(state => {
+            const cartItems = [...state.cartItems];
+            let productAllReadyInCart = false;
+            cartItems.forEach(item => {
+                if (item.id === product.id) {
+                    productAllReadyInCart = true;
+                    item.count = item.count + 1;
+                }
+            });
+            if (!productAllReadyInCart) {
+                cartItems.push({...product, count: 1});
+            }
+            localStorage.setItem("cartItems", JSON.stringify(cartItems));
+            return {cartItems: cartItems };
+        })
+    }
+
+
+
+
     render() {
-        const {filteredProducts, size, sort} = this.state
+        const {filteredProducts, size, sort, cartItems} = this.state
         return (
             <div className="container">
                 <h1 className={style.app}>Shopping Cart App</h1>
@@ -82,7 +100,9 @@ class App extends React.Component {
                         />
                     </div>
                     <div className="col-md-3">
-
+                        <Basket
+                            cartItems={cartItems}
+                            handleRemoveFromCart={this.handleRemoveFromCart}/>
                     </div>
                 </div>
 

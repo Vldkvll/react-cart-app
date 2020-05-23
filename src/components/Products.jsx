@@ -2,19 +2,20 @@ import React from "react";
 import util from "../Util/Util";
 
 const Products = ({products, handleAddToCart}) => {
-    const productsItem = products.map((item) =>
-        (<div className="col-md-4" key={item.id}>
+    const productsproduct = products.map( (product) =>
+        (<div className="col-md-4" key={product.id}>
             <div className="thumbnail text-center">
-                <a href={`# ${item.id}`} onClick={e => handleAddToCart(e, item)}>
-                    <img src={`/products/${item.sku}_2.jpg`} alt={item.title}/>
+                <a href={`# ${product.id}`} onClick={ev => handleAddToCart(ev, product)}>
+                    <img src={`/products/${product.sku}_2.jpg`} alt={product.title}/>
                     <p>
-                        {item.title}
+                        {product.title}
                     </p>
                 </a>
+
                 <div>
-                    <b>{util.formatCurrensy(item.price)}</b>
+                    <b>{util.formatCurrensy(product.price)}</b>
                     <button className="btn btn-primary"
-                            onClick={e => handleAddToCart(e, item)}>
+                            onClick={e => handleAddToCart(e, product)}>
                         Add To Cart
                     </button>
                 </div>
@@ -23,7 +24,7 @@ const Products = ({products, handleAddToCart}) => {
     )
     return (
         <div className="row">
-            {productsItem}
+            {productsproduct}
         </div>
     )
 }
