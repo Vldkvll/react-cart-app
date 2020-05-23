@@ -1,0 +1,6 @@
+.container {
+    position: fixed;
+    display: inline-block;
+    justify-content: center !important;
+    align-content: center;
+}

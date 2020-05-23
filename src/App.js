@@ -22,7 +22,7 @@ class App extends React.Component {
             filteredProducts: responseData.data
         })
 
-        if(localStorage.getItem('cartItems')){
+        if (localStorage.getItem('cartItems')) {
             this.setState({cartItems: JSON.parse(localStorage.getItem('cartItems'))})
         }
     }
@@ -57,7 +57,7 @@ class App extends React.Component {
     }
 
     handleAddToCart = (e, product) => {
-        console.log('product '+product.id)
+        // console.log('product ' + product.id)
         this.setState(state => {
             const cartItems = [...state.cartItems];
             let productAllReadyInCart = false;
@@ -71,11 +71,17 @@ class App extends React.Component {
                 cartItems.push({...product, count: 1});
             }
             localStorage.setItem("cartItems", JSON.stringify(cartItems));
-            return {cartItems: cartItems };
+            return {cartItems};
         })
     }
 
-
+    handleRemoveFromCart = (e, item) => {
+        this.setState(state => {
+            let cartItems = state.cartItems.filter(elem => elem.id !== item.id)
+            localStorage.setItem("cartItems", JSON.stringify(cartItems));
+            return {cartItems}
+        })
+    }
 
 
     render() {
@@ -85,7 +91,7 @@ class App extends React.Component {
                 <h1 className={style.app}>Shopping Cart App</h1>
                 <hr/>
                 <div className="row">
-                    <div className="col-md-9">
+                    <div className="col-md-8 my-auto">
                         <Filter
                             size={size}
                             sort={sort}
@@ -99,7 +105,7 @@ class App extends React.Component {
                             handleAddToCart={this.handleAddToCart}
                         />
                     </div>
-                    <div className="col-md-3">
+                    <div className="col-md-4">
                         <Basket
                             cartItems={cartItems}
                             handleRemoveFromCart={this.handleRemoveFromCart}/>
