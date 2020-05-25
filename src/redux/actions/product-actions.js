@@ -25,6 +25,7 @@ export const filterProducts = (products, size) => (dispatch) => {
 
 
 export const sortProducts = (products, sort) => (dispatch) => {
+    products = [...products];
     console.log('sort  ' + sort)
     products.forEach(a => console.log(a.price))
     if (sort !== '') {
