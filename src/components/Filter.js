@@ -1,12 +1,12 @@
 import React from "react";
 import {connect} from "react-redux";
-import {filterProducts} from "../redux/actions/product-actions";
+import {filterProducts, sortProducts} from "../redux/actions/product-actions";
 
-const Filter = ({products, size, sort, handleChangeSize, handleChangeSort, count, filterProducts}) => {
+const Filter = ({products, size, sort, sortProducts, filterProducts, filteredProducts}) => {
     return (
         <div className="row">
             <div className="col-md-4">
-                {count} Items Found.
+                {filteredProducts.length} Items Found.
             </div>
             <div className="col-md-4">
                 <label htmlFor="">
@@ -14,7 +14,7 @@ const Filter = ({products, size, sort, handleChangeSize, handleChangeSort, count
                     <select name="" id=""
                             className="form-control"
                             value={sort}
-                            onChange={handleChangeSort}
+                            onChange={ e => sortProducts(filteredProducts, e.target.value)}
                     >
                         <option value="">Select</option>
                         <option value="Lowest">Lowest to Highest</option>
@@ -46,8 +46,9 @@ const Filter = ({products, size, sort, handleChangeSize, handleChangeSort, count
 const mapStateToProps = (state) => ({
     products: state.products.items,
     size: state.products.size,
+    sort: state.products.sort,
     filteredProducts: state.products.filteredItems
 })
 
 
-export default connect(mapStateToProps, {filterProducts})(Filter);
+export default connect(mapStateToProps, {filterProducts, sortProducts})(Filter);

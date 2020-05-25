@@ -39,6 +39,7 @@ const Products = ({products, handleAddToCart, fetchProducts}) => {
 
 const mapStateToProps = (state) => ({
     products: state.products.filteredItems
+
 })
 
 

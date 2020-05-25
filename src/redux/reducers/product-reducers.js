@@ -1,9 +1,16 @@
-import {ADD_TO_CART, FETCH_PRODUCTS, FILTER_PRODUCTS_BY_SIZE, REMOVE_FROM_CART} from "../actions/types";
+import {
+    ADD_TO_CART,
+    FETCH_PRODUCTS,
+    FILTER_PRODUCTS_BY_SIZE,
+    ORDER_PRODUCTS_BY_PRICE,
+    REMOVE_FROM_CART
+} from "../actions/types";
 
 const initialState = {
     items: [],
     filteredItems: [],
-    size: ''
+    size: '',
+    sort: '',
 
 };
 
@@ -18,10 +25,11 @@ const productReducer = (state = initialState, action) => {
             return  {...state,
                 filteredItems: action.payload.items,
                 size: action.payload.size};
-        case ADD_TO_CART:
-            return
-        case REMOVE_FROM_CART:
-            return
+
+        case ORDER_PRODUCTS_BY_PRICE:
+            return {...state,
+                filteredItems: action.payload.items,
+                sort: action.payload.sort};
 
         default:
             return state;
@@ -31,3 +39,10 @@ const productReducer = (state = initialState, action) => {
 }
 
 export default productReducer
+
+
+//
+// case ADD_TO_CART:
+//     return
+// case REMOVE_FROM_CART:
+//     return

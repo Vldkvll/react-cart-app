@@ -27,15 +27,15 @@ class App extends React.Component {
         }
     }
 
-    handleChangeSort = (e) => {
-        this.setState({sort: e.target.value})
-        this.listProducts()
-    }
-
-    // handleChangeSize = (e) => {
-    //     this.setState({size: e.target.value})
+    // handleChangeSort = (e) => {
+    //     this.setState({sort: e.target.value})
     //     this.listProducts()
     // }
+    //
+    // // handleChangeSize = (e) => {
+    // //     this.setState({size: e.target.value})
+    // //     this.listProducts()
+    // // }
 
     // listProducts() {
     //     this.setState(state => {
@@ -56,32 +56,32 @@ class App extends React.Component {
     //     })
     // }
 
-    handleAddToCart = (e, product) => {
-        // console.log('product ' + product.id)
-        this.setState(state => {
-            const cartItems = [...state.cartItems];
-            let productAllReadyInCart = false;
-            cartItems.forEach(item => {
-                if (item.id === product.id) {
-                    productAllReadyInCart = true;
-                    item.count = item.count + 1;
-                }
-            });
-            if (!productAllReadyInCart) {
-                cartItems.push({...product, count: 1});
-            }
-            localStorage.setItem("cartItems", JSON.stringify(cartItems));
-            return {cartItems};
-        })
-    }
-
-    handleRemoveFromCart = (e, item) => {
-        this.setState(state => {
-            let cartItems = state.cartItems.filter(elem => elem.id !== item.id)
-            localStorage.setItem("cartItems", JSON.stringify(cartItems));
-            return {cartItems}
-        })
-    }
+    // handleAddToCart = (e, product) => {
+    //     // console.log('product ' + product.id)
+    //     this.setState(state => {
+    //         const cartItems = [...state.cartItems];
+    //         let productAllReadyInCart = false;
+    //         cartItems.forEach(item => {
+    //             if (item.id === product.id) {
+    //                 productAllReadyInCart = true;
+    //                 item.count = item.count + 1;
+    //             }
+    //         });
+    //         if (!productAllReadyInCart) {
+    //             cartItems.push({...product, count: 1});
+    //         }
+    //         localStorage.setItem("cartItems", JSON.stringify(cartItems));
+    //         return {cartItems};
+    //     })
+    // }
+    //
+    // handleRemoveFromCart = (e, item) => {
+    //     this.setState(state => {
+    //         let cartItems = state.cartItems.filter(elem => elem.id !== item.id)
+    //         localStorage.setItem("cartItems", JSON.stringify(cartItems));
+    //         return {cartItems}
+    //     })
+    // }
 
 
     render() {
@@ -92,18 +92,9 @@ class App extends React.Component {
                 <hr/>
                 <div className="row">
                     <div className="col-md-8 my-auto">
-                        <Filter
-                            size={size}
-                            sort={sort}
-                            handleChangeSize={this.handleChangeSize}
-                            handleChangeSort={this.handleChangeSort}
-                            count={filteredProducts.length}
-                        />
+                        <Filter />
                         <hr/>
-                        <Products
-                            products={filteredProducts}
-                            handleAddToCart={this.handleAddToCart}
-                        />
+                        <Products />
                     </div>
                     <div className="col-md-4">
                         <Basket
