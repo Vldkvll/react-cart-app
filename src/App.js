@@ -16,11 +16,11 @@ class App extends React.Component {
     }
 
     async componentDidMount(prevProps, prevState, snapshot) {
-        const responseData = await getProductsJson()
-        this.setState({
-            products: responseData.data,
-            filteredProducts: responseData.data
-        })
+        // const responseData = await getProductsJson()
+        // this.setState({
+        //     products: responseData.data,
+        //     filteredProducts: responseData.data
+        // })
 
         if (localStorage.getItem('cartItems')) {
             this.setState({cartItems: JSON.parse(localStorage.getItem('cartItems'))})
@@ -32,29 +32,29 @@ class App extends React.Component {
         this.listProducts()
     }
 
-    handleChangeSize = (e) => {
-        this.setState({size: e.target.value})
-        this.listProducts()
-    }
+    // handleChangeSize = (e) => {
+    //     this.setState({size: e.target.value})
+    //     this.listProducts()
+    // }
 
-    listProducts() {
-        this.setState(state => {
-            if (state.sort !== '') {
-                state.products.sort((a, b) => (state.sort === 'Lowest')
-                    ? a.price - b.price
-                    : b.price - a.price)
-            } else {
-                state.products.sort((a, b) => a.id - b.id)
-            }
-            if (state.size !== '') {
-                return {
-                    filteredProducts: state.products.filter(a =>
-                        a.availableSizes.indexOf(state.size.toUpperCase()) >= 0)
-                }
-            }
-            return {filteredProducts: state.products}
-        })
-    }
+    // listProducts() {
+    //     this.setState(state => {
+    //         if (state.sort !== '') {
+    //             state.products.sort((a, b) => (state.sort === 'Lowest')
+    //                 ? a.price - b.price
+    //                 : b.price - a.price)
+    //         } else {
+    //             state.products.sort((a, b) => a.id - b.id)
+    //         }
+    //         if (state.size !== '') {
+    //             return {
+    //                 filteredProducts: state.products.filter(a =>
+    //                     a.availableSizes.indexOf(state.size.toUpperCase()) >= 0)
+    //             }
+    //         }
+    //         return {filteredProducts: state.products}
+    //     })
+    // }
 
     handleAddToCart = (e, product) => {
         // console.log('product ' + product.id)
