@@ -1,9 +1,11 @@
 import React from "react";
 import util from "../Util/Util";
+import {connect} from "react-redux";
+import {removeFromCart} from "../redux/actions/cart-actions";
 
 import style from './basket.module.css';
 
-const Basket = ({cartItems, handleRemoveFromCart}) => {
+const Basket = ({cartItems, removeFromCart}) => {
 
     return (
         <div className={`alert alert-info  ${style.container}`}>
@@ -19,7 +21,7 @@ const Basket = ({cartItems, handleRemoveFromCart}) => {
                                     <b>{item.title}</b>
                                     x {item.count} = {util.formatCurrensy(+item.count * item.price)}
                                     <button className="btn btn-danger btn-sm"
-                                            onClick={e => handleRemoveFromCart(e, item)}
+                                            onClick={e => removeFromCart(cartItems, item)}
                                     >
                                         x
                                     </button>
@@ -34,10 +36,14 @@ const Basket = ({cartItems, handleRemoveFromCart}) => {
                             Checkout
                         </button>
                     </div>}
-                  
+
                 </div>}
         </div>
     )
 }
+const mapStateToProps = (state) => ({
+    cartItems: state.cart.items
+})
 
-export default Basket
+
+export default connect(mapStateToProps, {removeFromCart})(Basket);
